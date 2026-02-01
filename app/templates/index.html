@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Comprendeshi{% endblock %}
+
+{% block content %}
+    <h1>Bienvenue sur Comprendeshi!</h1>
+    
+    <script type="text/javascript" 
+        src="{{ url_for('static', filename='hello.js') }}"></script>
+    <input type="button" onclick="sayHello()" value="Say Hello" />
+    
+    <hr>
+    <h3>Cookie Demo</h3>
+    <form action="/setcookie" method="POST">
+        <input type="text" name="nm" placeholder="Enter userID" />
+        <input type="submit" value="Login with Cookie" />
+    </form>
+
+    <hr>
+    <h3>URL Redirect Demo</h3>
+    <p>Try these URLs:</p>
+    <ul>
+        <li><a href="/user/admin">/user/admin</a> → redirects to /admin</li>
+        <li><a href="/user/Leonardo">/user/Leonardo</a> → redirects to /guest/Leonardo</li>
+    </ul>
+{% endblock %}
