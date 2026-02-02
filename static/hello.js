@@ -1,3 +1,3 @@
 function sayHello() {
-    alert("Hello World Mosita")
+    alert("Hello World!")
 }

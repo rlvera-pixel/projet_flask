@@ -4,3 +4,5 @@ venv/
 .env
 *.db
 uploads/
+.venv
+.venv/
