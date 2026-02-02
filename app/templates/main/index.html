@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% from 'components/pagination.html' import render_pagination %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Bienvenue sur Comprendeshi</h1>
+    <p>Un projet Flask complet pour apprendre le développement web avec Python.</p>
+    {% if greeting %}
+        <p class="greeting">{{ greeting }}</p>
+    {% endif %}
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Commencer</a>
+    {% endif %}
+</section>
+
+<section class="features">
+    <h2>Fonctionnalités</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Authentification</h3>
+            <p>Inscription, connexion, gestion de profil avec Flask-Login.</p>
+        </div>
+        <div class="feature-card">
+            <h3>CRUD complet</h3>
+            <p>Créer, lire, modifier et supprimer des articles.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Upload de fichiers</h3>
+            <p>Envoi sécurisé de fichiers avec validation.</p>
+        </div>
+        <div class="feature-card">
+            <h3>API REST</h3>
+            <p>Endpoints JSON pour intégration avec d'autres applications.</p>
+        </div>
+    </div>
+</section>
+
+{% if posts and posts.items %}
+<section class="posts-section">
+    <h2>Articles récents</h2>
+    {% for post in posts.items %}
+        <article class="post-card">
+            <h3>{{ post.title }}</h3>
+            <p class="post-meta">
+                Par {{ post.author.username }} - {{ post.created_at|datetime }}
+                {% for tag in post.tags %}
+                    <span class="tag">{{ tag.name }}</span>
+                {% endfor %}
+            </p>
+            <p>{{ post.body|truncate_words(50) }}</p>
+        </article>
+    {% endfor %}
+    {{ render_pagination(posts, 'main.index') }}
+</section>
+{% endif %}
+
+<section class="demo-section">
+    <h2>Démonstrations Flask</h2>
+    <div class="demo-grid">
+        <div class="demo-card">
+            <h3>Variables d'URL</h3>
+            <p>Essayez : <a href="{{ url_for('main.hello', name='Visiteur') }}">/hello/Visiteur</a></p>
+        </div>
+        <div class="demo-card">
+            <h3>Cookies</h3>
+            <p><a href="{{ url_for('main.set_cookie') }}">Tester les cookies</a></p>
+        </div>
+        <div class="demo-card">
+            <h3>Redirections</h3>
+            <p>Essayez : <a href="{{ url_for('main.user_redirect', name='admin') }}">/user/admin</a> (redirige vers dashboard)</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

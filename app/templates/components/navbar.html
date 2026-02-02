@@ -1,0 +1,23 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="{{ url_for('main.index') }}" class="navbar-brand">Comprendeshi</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="{{ url_for('main.index') }}" class="{{ 'active' if request.endpoint == 'main.index' }}">Accueil</a></li>
+            <li><a href="{{ url_for('main.about') }}" class="{{ 'active' if request.endpoint == 'main.about' }}">A propos</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('dashboard.index') }}" class="{{ 'active' if request.endpoint and request.endpoint.startswith('dashboard') }}">Tableau de bord</a></li>
+                {% if current_user.is_admin() %}
+                    <li><a href="{{ url_for('dashboard.admin_panel') }}" class="nav-admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-user">
+                    <a href="{{ url_for('auth.profile') }}">{{ current_user.username }}</a>
+                </li>
+                <li><a href="{{ url_for('auth.logout') }}" class="btn btn-sm btn-outline">Déconnexion</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline">Connexion</a></li>
+                <li><a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary">Inscription</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

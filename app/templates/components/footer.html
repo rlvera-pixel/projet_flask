@@ -1,0 +1,10 @@
+<footer class="footer">
+    <div class="container">
+        <p>&copy; {{ now().year if now is defined else '2024' }} Comprendeshi - Projet Flask Tutorial</p>
+        <p class="footer-links">
+            <a href="{{ url_for('main.index') }}">Accueil</a> |
+            <a href="{{ url_for('main.about') }}">A propos</a> |
+            <a href="{{ url_for('api.get_posts') }}">API</a>
+        </p>
+    </div>
+</footer>

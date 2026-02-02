@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Tableau de bord</h1>
+    <p>Bienvenue, {{ current_user.username }} !</p>
+</section>
+
+<section class="content-section">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-number">{{ current_user.posts.count() }}</span>
+            <span class="stat-label">Articles</span>
+            <a href="{{ url_for('dashboard.posts') }}" class="stat-link">Voir tout</a>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">{{ current_user.files.count() }}</span>
+            <span class="stat-label">Fichiers</span>
+            <a href="{{ url_for('dashboard.files') }}" class="stat-link">Voir tout</a>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <h2>Derniers articles</h2>
+                <a href="{{ url_for('dashboard.new_post') }}" class="btn btn-sm btn-primary">Nouveau</a>
+            </div>
+            {% if posts %}
+                <ul class="item-list">
+                    {% for post in posts %}
+                    <li>
+                        <a href="{{ url_for('dashboard.edit_post', post_id=post.id) }}">{{ post.title }}</a>
+                        <span class="text-muted">{{ post.created_at|datetime }}</span>
+                        {% if not post.is_published %}
+                            <span class="badge badge-warning">Brouillon</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Aucun article. <a href="{{ url_for('dashboard.new_post') }}">Créer le premier</a></p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Derniers fichiers</h2>
+                <a href="{{ url_for('dashboard.upload') }}" class="btn btn-sm btn-primary">Envoyer</a>
+            </div>
+            {% if files %}
+                <ul class="item-list">
+                    {% for file in files %}
+                    <li>
+                        <a href="{{ url_for('dashboard.download_file', file_id=file.id) }}">{{ file.original_filename }}</a>
+                        <span class="text-muted">{{ file.file_size|filesizeformat }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Aucun fichier. <a href="{{ url_for('dashboard.upload') }}">Envoyer un fichier</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h2>Actions rapides</h2>
+        <div class="action-grid">
+            <a href="{{ url_for('dashboard.new_post') }}" class="action-card">
+                <span class="action-icon">+</span>
+                <span>Nouvel article</span>
+            </a>
+            <a href="{{ url_for('dashboard.upload') }}" class="action-card">
+                <span class="action-icon">&#8593;</span>
+                <span>Envoyer un fichier</span>
+            </a>
+            <a href="{{ url_for('auth.profile') }}" class="action-card">
+                <span class="action-icon">&#9881;</span>
+                <span>Mon profil</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,6 +1,40 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
 venv/
+env/
+
+# Environment variables
 .env
+
+# Database
 *.db
-uploads/
+instance/
+migrations/
+
+# Uploads (keep directory structure)
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage

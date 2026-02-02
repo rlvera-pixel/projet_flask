@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% from 'components/pagination.html' import render_pagination %}
+
+{% block title %}Mes articles{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Mes articles</h1>
+    <a href="{{ url_for('dashboard.new_post') }}" class="btn btn-primary">Nouvel article</a>
+</section>
+
+<section class="content-section">
+    {% if posts.items %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts.items %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.created_at|datetime }}</td>
+                    <td>
+                        {% if post.is_published %}
+                            <span class="badge badge-success">Publié</span>
+                        {% else %}
+                            <span class="badge badge-warning">Brouillon</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions">
+                        <a href="{{ url_for('dashboard.edit_post', post_id=post.id) }}" class="btn btn-sm">Modifier</a>
+                        <form method="POST" action="{{ url_for('dashboard.delete_post', post_id=post.id) }}" class="inline-form" onsubmit="return confirm('Supprimer cet article ?');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ render_pagination(posts, 'dashboard.posts') }}
+    {% else %}
+        <div class="empty-state">
+            <p>Vous n'avez pas encore d'articles.</p>
+            <a href="{{ url_for('dashboard.new_post') }}" class="btn btn-primary">Créer un article</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

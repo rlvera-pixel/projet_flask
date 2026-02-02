@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Mon profil</h1>
+</section>
+
+<section class="content-section">
+    <div class="grid-2">
+        <div class="card">
+            <h2>Informations</h2>
+            <form method="POST" action="{{ url_for('auth.profile') }}">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class='form-control') }}
+                    {% for error in form.username.errors %}
+                        <span class="form-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class='form-control') }}
+                    {% for error in form.email.errors %}
+                        <span class="form-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <p class="text-muted">
+                    Membre depuis : {{ current_user.created_at|datetime }}<br>
+                    Rôle : {{ current_user.role }}
+                </p>
+
+                {{ form.submit(class='btn btn-primary') }}
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Changer le mot de passe</h2>
+            <form method="POST" action="{{ url_for('auth.change_password') }}">
+                {{ password_form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ password_form.old_password.label }}
+                    {{ password_form.old_password(class='form-control') }}
+                </div>
+
+                <div class="form-group">
+                    {{ password_form.new_password.label }}
+                    {{ password_form.new_password(class='form-control') }}
+                </div>
+
+                <div class="form-group">
+                    {{ password_form.new_password2.label }}
+                    {{ password_form.new_password2(class='form-control') }}
+                </div>
+
+                {{ password_form.submit(class='btn btn-primary') }}
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Statistiques</h2>
+        <div class="stats-grid">
+            <div class="stat">
+                <span class="stat-number">{{ current_user.posts.count() }}</span>
+                <span class="stat-label">Articles</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">{{ current_user.files.count() }}</span>
+                <span class="stat-label">Fichiers</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

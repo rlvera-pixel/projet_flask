@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Démonstration Cookies{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Démonstration des Cookies</h1>
+</section>
+
+<section class="content-section">
+    <div class="card">
+        <h2>Définir un cookie</h2>
+        <form method="POST" action="{{ url_for('main.set_cookie') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="user_id">Valeur du cookie (user_id) :</label>
+                <input type="text" id="user_id" name="user_id" class="form-control" placeholder="Entrez une valeur" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Définir le cookie</button>
+        </form>
+    </div>
+
+    {% if cookie_value %}
+    <div class="card">
+        <h2>Cookie actuel</h2>
+        <p>Valeur du cookie <code>user_id</code> : <strong>{{ cookie_value }}</strong></p>
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h2>Comment ça marche ?</h2>
+        <p>Les cookies sont de petites données stockées dans le navigateur. Flask permet de les créer avec <code>response.set_cookie()</code> et de les lire avec <code>request.cookies.get()</code>.</p>
+        <pre><code># Définir un cookie
+resp = make_response(redirect(url_for('main.get_cookie')))
+resp.set_cookie('user_id', value, max_age=3600)
+
+# Lire un cookie
+value = request.cookies.get('user_id')</code></pre>
+    </div>
+</section>
+{% endblock %}

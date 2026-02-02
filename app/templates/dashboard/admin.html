@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Administration</h1>
+</section>
+
+<section class="content-section">
+    <div class="card">
+        <h2>Utilisateurs ({{ users|length }})</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Inscription</th>
+                    <th>Actif</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.is_admin() %}
+                            <span class="badge badge-primary">Admin</span>
+                        {% else %}
+                            <span class="badge">Utilisateur</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.created_at|datetime }}</td>
+                    <td>{{ 'Oui' if user.is_active else 'Non' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

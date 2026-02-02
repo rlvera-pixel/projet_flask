@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-card">
+        <h1>Connexion</h1>
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class='form-control', placeholder='Votre nom d\'utilisateur') }}
+                {% for error in form.username.errors %}
+                    <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class='form-control', placeholder='Votre mot de passe') }}
+                {% for error in form.password.errors %}
+                    <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group form-check">
+                {{ form.remember_me(class='form-check-input') }}
+                {{ form.remember_me.label }}
+            </div>
+
+            {{ form.submit(class='btn btn-primary btn-block') }}
+        </form>
+
+        <p class="auth-link">
+            Pas encore de compte ? <a href="{{ url_for('auth.register') }}">S'inscrire</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

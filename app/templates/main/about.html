@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}A propos{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>A propos de Comprendeshi</h1>
+</section>
+
+<section class="content-section">
+    <h2>Le projet</h2>
+    <p>
+        Comprendeshi est un projet Flask intégrateur créé dans le cadre de l'apprentissage
+        du framework Flask. Il implémente toutes les sections du tutoriel Flask de GeeksforGeeks
+        dans une application professionnelle et structurée.
+    </p>
+
+    <h2>Technologies utilisées</h2>
+    <ul>
+        <li><strong>Flask</strong> - Framework web Python</li>
+        <li><strong>Flask-SQLAlchemy</strong> - ORM pour la base de données</li>
+        <li><strong>Flask-Migrate</strong> - Migrations de base de données avec Alembic</li>
+        <li><strong>Flask-Login</strong> - Gestion de l'authentification</li>
+        <li><strong>Flask-WTF</strong> - Formulaires avec protection CSRF</li>
+        <li><strong>Flask-RESTful</strong> - API REST</li>
+        <li><strong>SQLite</strong> - Base de données (développement)</li>
+        <li><strong>Docker</strong> - Containerisation</li>
+    </ul>
+
+    <h2>Sections du tutoriel couvertes</h2>
+    <ol>
+        <li>Flask Quick Start (routes, variables, méthodes HTTP)</li>
+        <li>Templates et fichiers statiques (Jinja2, héritage, filtres)</li>
+        <li>Gestion des formulaires (Flask-WTF, validation, CSRF)</li>
+        <li>Configuration par environnement</li>
+        <li>Base de données (SQLAlchemy, migrations, CRUD)</li>
+        <li>Middlewares (hooks before/after request)</li>
+        <li>Authentification (Flask-Login, hashing, RBAC)</li>
+        <li>API REST (JSON, pagination, filtrage)</li>
+        <li>Fonctionnalités avancées (Blueprints, pagination)</li>
+        <li>Gestion des erreurs et déploiement (Docker, Gunicorn)</li>
+    </ol>
+
+    <h2>Structure du projet</h2>
+    <pre><code>projet_flask/
+├── app/
+│   ├── __init__.py         # Application factory
+│   ├── config.py           # Configuration
+│   ├── extensions.py       # Extensions Flask
+│   ├── models/             # Modèles SQLAlchemy
+│   ├── routes/             # Blueprints (main, auth, api, dashboard, errors)
+│   ├── templates/          # Templates Jinja2
+│   ├── static/             # CSS, JS, uploads
+│   ├── forms/              # Formulaires WTF
+│   └── utils/              # Décorateurs et helpers
+├── tests/                  # Tests pytest
+├── migrations/             # Migrations Alembic
+├── run.py                  # Point d'entrée
+├── wsgi.py                 # Production (Gunicorn)
+├── Dockerfile
+└── docker-compose.yml</code></pre>
+</section>
+{% endblock %}
